@@ -1,31 +1,30 @@
-from collections import deque
+s = 'aAb'
+print(s.lower())
+print(ord('t'), ord('T'))
+print(ord('o'), ord('O'))
+print(ord('s'), ord('S'))
+print(ord('z'))
+import sys
+# 알파벳 아스키코드 저장할 배열
+alpha = [0] * 123
+ls = list(map(str.lower,sys.stdin.readline().rstrip()))
+for i in ls:
+    alpha[ord(i)] += 1
 
-n, m = map(int, input().split())
+max_value = max(alpha)
+result = []
+if alpha[ord('t')] == max_value:
+    result.append('T')
+if alpha[ord('o')] == max_value:
+    result.append('O')
+if alpha[ord('s')] == max_value:
+    result.append('SS')
 
-graph = []
-for _ in range(n):
-    graph.append(list(map(int, input())))
+for i in range(ord('a'), ord('z')+1):
+    if alpha[i] == max_value and i not in [ord('t'), ord('o'), ord('s')]:
+        result.append(chr(i))
 
-dx = [1, -1, 0, 0]
-dy = [0, 0, 1, -1]
-
-def bfs(x, y):
-    queue = deque()
-    queue.append((x,y))
-
-    while queue:
-        x, y = queue.popleft()
-        for i in range(4):
-            mx = x + dx[i]
-            my = y + dy[i]
-
-            if mx < 0 or mx >= n or my < 0 or my >= m:
-                continue
-            
-            if graph[mx][my] == 1:
-                graph[mx][my] = graph[x][y] + 1
-                queue.append((mx, my))
-        
-    return graph[n-1][m-1]
-
-print(bfs(0,0))
+answer = ''
+for i in result:
+    answer += i
+print(answer)
